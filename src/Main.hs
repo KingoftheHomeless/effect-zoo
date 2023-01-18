@@ -5,7 +5,6 @@ import qualified Data.ByteString.Lazy          as BS
 import qualified Data.Csv                      as Csv
 import qualified EffectZoo.Scenario.BigStack   as BigStack
 import qualified EffectZoo.Scenario.CountDown  as CountDown
-import qualified EffectZoo.Scenario.FileSizes  as FileSizes
 import qualified EffectZoo.Scenario.Reinterpretation
                                                as Reinterpretation
 -- import           Statistics.Types
@@ -17,9 +16,8 @@ import Data.Foldable
 main :: IO ()
 main = for_
     [ ("big-stack", BigStack.benchmarks)
-    , ("countdown", CountDown.benchmarks)
-    , ("file-sizes", FileSizes.benchmarks)
-    , ("reinterpretation", Reinterpretation.benchmarks)
+    -- , ("countdown", CountDown.benchmarks)
+      -- , ("reinterpretation", Reinterpretation.benchmarks)
     ]
     (\(name, scenario) -> do
       let config = defaultConfig

@@ -14,3 +14,4 @@ program = do
     else do
       put (n - 1)
       program
+{-# NOINLINE program #-}
