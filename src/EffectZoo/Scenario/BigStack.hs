@@ -32,8 +32,9 @@ benchmarks = do
       , [ (0 , Polysemy.bigStack0)
         , (1 , Polysemy.bigStack1)
         , (5 , Polysemy.bigStack5)
-        , (10, Polysemy.bigStack10)
-        , (20, Polysemy.bigStack20)
+        -- Yeah. Too slow.
+        -- , (10, Polysemy.bigStack10)
+        -- , (20, Polysemy.bigStack20)
         ]
       )
     ]

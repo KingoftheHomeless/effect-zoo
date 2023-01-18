@@ -2,17 +2,20 @@
 module EffectZoo.Scenario.BigStack.Polysemy.Identity where
 
 import Polysemy
+import Polysemy.Meta
 
-data Identity (m :: * -> *) a where
-  Identity :: m a -> Identity m a
-makeSem ''Identity
+data IdentityMeta :: MetaEffect where
+  Identity :: z a -> IdentityMeta '[z :% Identity] m a
+
+type Identity = Meta IdentityMeta
+
+identity :: Member Identity r => Sem (Identity ': r) a -> Sem r a
+identity m = sendMeta (Identity m)
 
 runIdentity :: Sem (Identity ': effs) a -> Sem effs a
-runIdentity = interpretH $ \(Identity m) ->
-  -- runH m -- v2
-  runTSimple m -- v1
+runIdentity = interpretMeta $ \(Identity m) ->
+  runMeta runIdentity m
 
 identityToIdentity :: Member Identity effs => Sem (Identity ': effs) a -> Sem effs a
-identityToIdentity = interpretH $ \(Identity m) ->
-  -- identity (runH m) -- v2
-  identity (runTSimple m) -- v2
+identityToIdentity = interpretMeta $ \(Identity m) ->
+  runMeta identity m

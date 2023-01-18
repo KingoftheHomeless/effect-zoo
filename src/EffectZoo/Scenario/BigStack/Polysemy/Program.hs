@@ -12,7 +12,7 @@ import Polysemy.State
 program :: (Member (Reader Int) effs, Member Identity effs, Member (State Int) effs) => Sem effs ()
 program = do
   n <- ask @Int
-  foldl' (\b _ -> identity (local @Int (+1) b))
+  foldl' (\b _ -> identity (raise (local @Int (+1) b)))
          (ask @Int >>= \n' -> replicateM_ n' (modify (+ n')))
          [0..n]
 {-# NOINLINE program #-}
